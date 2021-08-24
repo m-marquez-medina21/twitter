@@ -1,0 +1,60 @@
+
+  <div class="py-2 mb-1">
+    <%= render 'form', tweet: @tweet %>
+  </div>
+    
+  <% @tweets.each do |tweet| %>
+    <div class="card"> 
+        
+      <div class="card-header" aling="left"> <!-- mostrar imagen y nombre en los tweets alineados a la izquierda-->
+        <div class="d-flex align-items-center">
+          <div class="card text-white bg-primary rounded-3 border" style="max-width: 60px;">
+            <%= image_tag tweet.user.user_photo%>
+          </div>
+          <b >@<%= tweet.user.user_name %></b>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <%= tweet.content %>
+        </p>
+        <div class="text-muted h7 mb-2"><%= link_to time_ago_in_words(tweet.created_at), tweet_path(tweet), style:'text-decoration: none' %>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <% if @user_likes.include?(tweet.id) %>  
+          <%= link_to dislike_path(tweet.id), method: :delete do%>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-broken" width="28" height="28" viewBox="0 0 24 24" stroke-width="2" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+              <path d="M12 7l-2 4l4 3l-2 4v3" />
+            </svg>
+          <% end %>
+        <% else %>
+          <%= link_to like_path(tweet.id), method: :post do%>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="28"   height="28" viewBox="0 0 24 24" stroke-width="2" stroke="#ff2825" fill="none" stroke-linecap="round"  stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+            </svg>
+              <span><%= tweet.likes.count %></span>
+          <% end %>
+        <% end %>  
+          <%= link_to retweet_path(tweet.id), method: :post do%>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-recycle" width="28" height="28" viewBox="0 0 24 24" stroke-width="2" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 17l-2 2l2 2m-2 -2h9a2 2 0 0 0 1.75 -2.75l-.55 -1" />
+              <path d="M12 17l-2 2l2 2m-2 -2h9a2 2 0 0 0 1.75 -2.75l-.55 -1" transform="rotate(120 12 13)" />
+              <path d="M12 17l-2 2l2 2m-2 -2h9a2 2 0 0 0 1.75 -2.75l-.55 -1" transform="rotate(240 12 13)" />
+            </svg>
+              <span><%= tweet.retweets.count %></span>
+          <% end %>
+      </div>
+    </div>
+  <% end %>
+
+    
+<%= paginate @tweets ,class:" btn btn-primary rounded-pill" %>
+
+
+
