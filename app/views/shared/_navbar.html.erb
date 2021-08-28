@@ -14,7 +14,7 @@
                 <% if user_signed_in? %>
                 <h1 class="text-white" >Bienvenido(a) <%= current_user.user_name%><img src="<%= current_user.user_photo %>" width="40" height="40" class="rounded-circle md-2"></h1>
                     <li class="nav-item active">
-                        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-light mx-4'%>
+                        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-light mx-4 my-2 my-sm-0'%>
                     </li>
                 <% else %>
                     <li class="nav-item">
@@ -26,5 +26,10 @@
                 <% end %>
             </ul>
         </div>
+
+        <%= form_with(url: root_path, method: :get, local: :true, class: 'form-inline my-2 my-lg-0') do %>
+            <%= text_field_tag :q, "", class: 'form-control mr-sm-2' %>
+            <%= submit_tag('Search', class: 'btn btn-light mx-4 my-2 my-sm-0')  %>
+        <% end %> 
     </nav>
 </div>

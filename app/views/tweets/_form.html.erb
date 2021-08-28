@@ -10,13 +10,15 @@
     </div>
   <% end %>
 
-  <div class="card text-center mx-auto col-md-6 mb-3">
-    <h3 class="card-title py-3">¿Qué está pasando?</h3>
-    <div class="form-group">
-      <%= f.text_area :content, row: 3, class: 'col-md-7'%>
+  <% if user_signed_in? %>
+    <div class="card text-center mx-auto col-md-6 mb-3">
+      <h3 class="card-title py-3">¿Qué está pasando?</h3>
+      <div class="form-group">
+        <%= f.text_area :content, row: 3, class: 'col-md-7'%>
+      </div>
+      <div class = 'actions' my-2>
+        <%= f.submit class: 'btn btn-primary'%>
+      </div>
     </div>
-    <div class = 'actions' my-2>
-      <%= f.submit class: 'btn btn-primary'%>
-    </div>
-  </div>
+  <% end %>
 <% end %>

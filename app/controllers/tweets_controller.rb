@@ -3,9 +3,15 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json -- paginacion del index se deja en 5 tweets en un inicio para hacer pruebas
   def index
-    @user_likes = Like.where(user: current_user).pluck(:tweet_id)
+  # Buqueda parcial
+  if params[:q]
+    @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(created_at: :desc).page params[:page]
+  else
+    @tweets= Tweet.eager_load(:user, :likes).order(created_at: :desc).page params[:page]
+  end
     @tweet = Tweet.new
-    @tweets = Tweet.order(created_at: :desc).page(params[:page]).per(5)
+    @user_likes = Like.where(user: current_user).pluck(:tweet_id)
+    
   end
 
   # GET /tweets/1 or /tweets/1.json

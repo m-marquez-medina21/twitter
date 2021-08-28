@@ -2,6 +2,7 @@ class LikesController < ApplicationController
 before_action :authenticate_user! #solo usuario regustrado puede dar like
     def like
         tweet = Tweet.find(params[:tweet_id]) #id del tweet
+        flash[:notice] = "NO puedes dar dos likes sobre el mismo tweet" if tweet.likes.pluck(:user_id).include? (current_user.id)
         new_like = Like.create(tweet: tweet, user: current_user)#nos permite crear el like
         redirect_to root_path #redirecciona al index
     end
