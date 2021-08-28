@@ -16,7 +16,7 @@
       </div>
       <div class="card-body">
         <p class="card-text">
-          <%= tweet.content %>
+          <%= hashtag(tweet.content) %>
         </p>
         <div class="text-muted h7 mb-2"><%= link_to time_ago_in_words(tweet.created_at), tweet_path(tweet), style:'text-decoration: none' %>
         </div>
