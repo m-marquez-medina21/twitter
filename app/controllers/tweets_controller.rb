@@ -40,6 +40,7 @@ class TweetsController < ApplicationController
     @user_likes = Like.where(user: current_user).pluck(:tweet_id)
     # @user_likes = Like.eager_load(:user, :tweet).where(user: current_user).pluck(:tweet_id)
     # @users = User.where('id IS NOT ?', current_user.id) if user_signed_in?
+    @users = User.all
   end
 
   # GET /tweets/1 or /tweets/1.json
