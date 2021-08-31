@@ -1,8 +1,9 @@
+<% if user_signed_in? %>
+    <%= render 'users_follow' %>
+<% end %>
 
+  <%= render 'form', tweet: @tweet %>
   
-    <%= render 'form', tweet: @tweet %>
-  
-    
   <% @tweets.each do |tweet| %>
     <div class="card"> 
         

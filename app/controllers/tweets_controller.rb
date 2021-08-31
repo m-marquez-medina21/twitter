@@ -6,16 +6,23 @@ class TweetsController < ApplicationController
   # Buqueda parcial
   if params[:q]
     @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(created_at: :desc).page params[:page]
+  elsif user_signed_in?
+    @tweets = Tweet.tweets_for_me(current_user).order(created_at: :desc).page params[:page]
+    
   else
     @tweets= Tweet.eager_load(:user, :likes).order(created_at: :desc).page params[:page]
+    
   end
     @tweet = Tweet.new
-    @user_likes = Like.where(user: current_user).pluck(:tweet_id)
-    
+    # @user_likes = Like.where(user: current_user).pluck(:tweet_id)
+    @user_likes = Like.eager_load(:user, :tweet).where(user: current_user).pluck(:tweet_id)
+    @users = User.where('id IS NOT ?', current_user.id).last(5) if user_signed_in?
   end
 
   # GET /tweets/1 or /tweets/1.json
   def show
+    @tweet = Tweet.find(params[:id])
+    @post_likes = @post.likes
   end
 
   # GET /tweets/new -- si el usuario esta logeado, que se cree el tweet, de lo contrario se redirige al iniciar secion
@@ -34,14 +41,14 @@ class TweetsController < ApplicationController
   # POST /tweets or /tweets.json
   def create
     @tweet = Tweet.new(content: params[:tweet][:content])
-    @tweet.user= current_user
+    @tweet.user_id = current_user.id
 
     respond_to do |format|
       if @tweet.save
         format.html { redirect_to root_path, notice: "Tweet was successfully created." }
         format.json { render :show, status: :created, location: @tweet }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to root_path, status: :unprocessable_entity }
         format.json { render json: @tweet.errors, status: :unprocessable_entity }
       end
     end
@@ -84,6 +91,6 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:content, :retweet, :rt_ref)
+      params.require(:tweet).permit(:content, :retweet)
     end
 end
