@@ -2,7 +2,30 @@ class TweetsController < ApplicationController
   before_action :set_tweet, only: %i[ show edit update destroy :retweet]
 
   # GET /tweets or /tweets.json -- paginacion del index se deja en 5 tweets en un inicio para hacer pruebas
+
+  # def index
+  #   @user_likes = Like.where(user: current_user).pluck(:tweet_id)
+  # # Buqueda parcial
+  #   if params[:q]
+  #     @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(created_at: :desc).page params[:page]
+    
+  #   elsif user_signed_in?
+  #     @tweets = Tweet.tweets_for_me(current_user).order(created_at: :desc).page params[:page]
+      
+  #   else
+  #     @tweets= Tweet.eager_load(:user, :likes).order(created_at: :desc).page params[:page]
+  #   end
+  #     @tweet = Tweet.new
+  #     @tweets = Tweet.order(created_at: :desc).page(params[:page])
+  #     @user_likes = Like.eager_load(:user, :tweet).where(user: current_user).pluck(:tweet_id)
+  #     @user_likes = Like.where(user: current_user).pluck(:tweet_id)
+  #     @users = User.where('id IS NOT ?', current_user.id) if user_signed_in?
+
+  # end
+
+
   def index
+    @user_likes = Like.where(user: current_user).pluck(:tweet_id)
   # Buqueda parcial
   if params[:q]
     @tweets = Tweet.where('content LIKE ?', "%#{params[:q]}%").order(created_at: :desc).page params[:page]
@@ -14,15 +37,15 @@ class TweetsController < ApplicationController
     
   end
     @tweet = Tweet.new
-    # @user_likes = Like.where(user: current_user).pluck(:tweet_id)
-    @user_likes = Like.eager_load(:user, :tweet).where(user: current_user).pluck(:tweet_id)
-    @users = User.where('id IS NOT ?', current_user.id).last(5) if user_signed_in?
+    @user_likes = Like.where(user: current_user).pluck(:tweet_id)
+    # @user_likes = Like.eager_load(:user, :tweet).where(user: current_user).pluck(:tweet_id)
+    @users = User.where('id IS NOT ?', current_user.id) if user_signed_in?
   end
 
   # GET /tweets/1 or /tweets/1.json
   def show
-    @tweet = Tweet.find(params[:id])
-    @post_likes = @post.likes
+    # @tweet = Tweet.find(params[:id])
+    # @post_likes = @post.likes
   end
 
   # GET /tweets/new -- si el usuario esta logeado, que se cree el tweet, de lo contrario se redirige al iniciar secion
@@ -41,7 +64,7 @@ class TweetsController < ApplicationController
   # POST /tweets or /tweets.json
   def create
     @tweet = Tweet.new(content: params[:tweet][:content])
-    @tweet.user_id = current_user.id
+    @tweet.user = current_user
 
     respond_to do |format|
       if @tweet.save

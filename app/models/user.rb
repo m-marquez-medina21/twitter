@@ -10,9 +10,9 @@ class User < ApplicationRecord
 
 
 
-def can_follow?
-  should_follow = self.followeds.pluck(:follower_id) 
-  !should_follow.include?(self.id)
-end
+  def can_follow?
+    should_follow = self.followeds.pluck(:follower_id) 
+    !should_follow.include?(self.id)
+  end
 
 end
