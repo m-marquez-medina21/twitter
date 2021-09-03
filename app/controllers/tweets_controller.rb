@@ -39,7 +39,7 @@ class TweetsController < ApplicationController
     @tweet = Tweet.new
     @user_likes = Like.where(user: current_user).pluck(:tweet_id)
     # @user_likes = Like.eager_load(:user, :tweet).where(user: current_user).pluck(:tweet_id)
-    @users = User.where.not(id: current_user.id) if user_signed_in?
+    # @users = User.where.not(id: current_user.id) if user_signed_in?
     # @users = User.all
   end
 

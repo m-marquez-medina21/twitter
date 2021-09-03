@@ -10,10 +10,13 @@ class User < ApplicationRecord
 
 
 
-  def can_follow?(user)
-    #se extrae todos los seguidores
-    should_follow = self.followers.pluck(:follower_id) 
-    !should_follow.include?(self.id)
+  def can_follow
+    User.where.not(id: followeds.map(&:followed_id)).limit(6)
+
+
+    # #se extrae todos los seguidores
+    # should_follow = self.followers.pluck(:follower_id) 
+    # !should_follow.include?(self.id)
   end
 
 end
