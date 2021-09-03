@@ -1,13 +1,13 @@
 <div class="card-body" aling="left"> 
     <div class="d-flex align-items-center"> 
         <% @users.each do |user| %>
-            
+            <% if user.can_follow?(current_user) %>
                 <%= link_to follow_path(user.id), method: :post do%>
                 <div class="card text-white bg-primary rounded-3 border" style="max-width: 60px;">
                     <%= image_tag user.user_photo %>
                 </div>
                 <% end %>
-            
+            <% end %>
         <% end %>
     </div>
 </div>
