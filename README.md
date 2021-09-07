@@ -1,26 +1,29 @@
-link heroku https://polar-journey-83888.herokuapp.com/tweets
-
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Twitter V1
 
-Things you may want to cover:
+* Clon de twitter para desafio Latam Modulo apps con Rails
 
-* Ruby version
+# Comenzando
 
-* System dependencies
+* basic_authenticate_with name: "hello", password: "123123"
+* activadmin: email: 'admin@example.com', password: '123456'
+* Link de proyecto en heroku https://polar-journey-83888.herokuapp.com/tweets
 
-* Configuration
+# Pre-Requisitos
 
-* Database creation
+* Ruby '2.7.3'
+* Rails '5.2.6'
 
-* Database initialization
+# Gemas Instaladas
 
-* How to run the test suite
+* gem 'bootstrap', '~> 4.3.1'
+* gem 'jquery-rails'
+* gem 'kaminari'
+* gem "font-awesome-rails"
+* gem 'ransack'
+* gem 'faker'
+* gem 'activeadmin'
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
 
 *...

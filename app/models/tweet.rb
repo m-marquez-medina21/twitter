@@ -5,5 +5,4 @@ class Tweet < ApplicationRecord
     has_many :retweets, class_name: 'Tweet', foreign_key: 'tweet_id', dependent: :destroy
     belongs_to :original_tweet, class_name: 'Tweet', foreign_key: 'tweet_id', optional: true
     has_many :likes, dependent: :destroy
-    
 end

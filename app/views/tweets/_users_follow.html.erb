@@ -4,7 +4,7 @@
             <% if current_user.id != user.id %>
                 <%= link_to follow_path(user.id), method: :post do%>
                     <div class="card text-white bg-primary rounded-3 border" style="max-width: 60px;">
-                        <%= image_tag user.user_photo %>
+                        <%= image_tag user.user_photo, width:"100%" %>
                     </div>
                 <% end %>  
             <% end %>
